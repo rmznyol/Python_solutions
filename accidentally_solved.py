@@ -17,3 +17,15 @@ def longest_consecutive_subsequence(nums: list[int]) -> int:
         else:
             i = j
     return longest
+
+# Count the number of anagrams of a string:
+from collections import Counter
+from math import factorial
+def anagram_counter(s):
+    s_counter = Counter(s)
+    count = factorial(len(s))
+    for i in s_counter.values():
+        count /= factorial(i)
+    return count
+
+anagram_counter('okzojaporykbmq')
