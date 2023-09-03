@@ -29,7 +29,29 @@ class SmallestInfiniteSet:
 ############################################################
 
 ############################################################
+#2462. Total Cost to Hire K Workers
 
-############################################################
-
-############################################################
+from heapq import heapify, heappop
+class Solution:
+    def totalCost(self, costs: List[int], k: int, candidates: int) -> int:
+        total_cost = 0
+        left = candidates
+        right = len(costs) - candidates
+        if candidates <= len(costs) / 2:
+            heap = [(cost,index,True) for index,cost in enumerate(costs[:left])]
+            heap += [(cost, right + index, False) for index,cost in enumerate(costs[right:])]
+        else:
+            heap = [(cost,index,True) for index,cost in enumerate(costs)]
+        heapify(heap)
+        while k:
+            cost, index, on_left = heappop(heap)
+            total_cost += cost
+            k -= 1
+            if left < right:
+                if on_left :
+                    heappush(heap,(costs[left], left, True))
+                    left += 1
+                else:
+                    right -= 1
+                    heappush(heap,(costs[right], right, False))
+        return total_cost
