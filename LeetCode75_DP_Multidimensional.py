@@ -18,3 +18,14 @@ class Solution:
                     dp[i][j] = max(dp[i-1][j],dp[i][j-1])
         return dp[m-1][n-1]
 ######################################################################
+# 714. Best Time to Buy and Sell Stock with Transaction Fee
+    
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        n = len(prices)
+        hold, free = -prices[0], 0
+        # hold = profit you made until i-1 by being in hold state at i-1 
+        # free = profit you made until i-1 by being in sold state at i-1
+        for i in range(1, n):
+            hold, free = max(hold, free - prices[i]), max(free, hold + prices[i] - fee)
+        return free
