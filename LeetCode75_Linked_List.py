@@ -76,3 +76,31 @@ class Solution:
         return before
 ##############################################################################################################
 # 2130. Maximum Twin Sum of a Linked List    
+
+class Solution:
+    def pairSum(self, head: Optional[ListNode]) -> int:
+        slow = head
+        fast = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+
+        # reverse the next half
+        before = slow
+        after = slow.next
+        before.next = None
+        while after:
+            temp = after.next
+            after.next = before
+            before = after
+            after = temp
+        
+        twin_left = head
+        twin_right = before 
+        mx = float('-inf')
+        while twin_right:
+            curr_total = twin_left.val + twin_right.val 
+            mx = curr_total if curr_total > mx else mx
+            twin_left = twin_left.next
+            twin_right = twin_right.next
+        return mx 
