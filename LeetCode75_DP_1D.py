@@ -51,3 +51,14 @@ class Solution:
 ######################################################################
 # 790. Domino and Tromino Tiling
 
+class Solution:
+    def numTilings(self, n: int) -> int:
+        dp = [2 for _ in range(n+1)]
+        dp[:2] = [0,1,2]
+        rolling_sum = 1
+        prev, tail = 2, 0
+        for i in range(3,n+1):
+            rolling_sum += dp[i-1] + dp[i-3]
+            dp[i] += rolling_sum
+        return dp[n] % (10**9 + 7)
+
