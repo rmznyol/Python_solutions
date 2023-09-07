@@ -18,9 +18,18 @@ class Solution:
     #     return lookup[n]
 
 ######################################################################
+#746. Min Cost Climbing Stairs
 
-######################################################################
-
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        n = len(cost)
+        if n <= 1:
+            return 0
+        cost_from = cost[-2:]
+        for current_cost in cost[-3::-1]:
+            cost_from_current_cost = current_cost + min(cost_from)
+            cost_from = [cost_from_current_cost,cost_from[0]]
+        return min(cost_from)
 ######################################################################
 
 ######################################################################
