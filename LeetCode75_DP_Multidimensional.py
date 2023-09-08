@@ -1,3 +1,14 @@
+#62. Unique Paths
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        path_counts = [[1 for range in range(n)] for _ in range(m)]
+        for row in range(1,m):
+            for column in range(1,n):
+                path_counts[row][column] = (path_counts[row - 1][column] + 
+                path_counts[row][column - 1])
+        return path_counts[m-1][n-1]
+    
 # 1143. Longest Common Subsequence
 
 class Solution:
