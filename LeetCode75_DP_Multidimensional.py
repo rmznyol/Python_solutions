@@ -29,3 +29,31 @@ class Solution:
         for i in range(1, n):
             hold, free = max(hold, free - prices[i]), max(free, hold + prices[i] - fee)
         return free
+
+######################################################################
+# 72. Edit Distance
+
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        m, n = len(word2), len(word1)
+        if not m: return n
+        if not n: return m
+        dp = [[i + j if i == 0 or j == 0 else 0 for j in range(n+1)] for i in range(m+1)]
+        for i in range(1,m+1):
+            for j in range(1,n+1):
+                if word1[j-1] == word2[i-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                else:
+                    dp[i][j] = min(dp[i-1][j-1],dp[i][j-1],dp[i-1][j]) + 1
+        # for row in dp:
+        #     print(row)
+        return dp[m][n]
+        # def rec(word1, word2):
+        #     if word1 == word2:
+        #         return 0
+        #     if word1 == '': return len(word2)
+        #     if word2 == '': return len(word1)
+        #     if word1[-1] == word2[-1]:
+        #         return rec(word1[:-1],word2[:-1])
+        #     return min([rec(word1[:-1],word2[:-1]), rec(word1,word2[:-1]), rec(word1[:-1],word2)]) + 1
+        # return rec(word1,word2)
