@@ -19,3 +19,25 @@ class Solution:
                 curr = curr.left
         return None        
 #################################################################################
+
+# 450. Delete Node in a BST
+
+class Solution:
+    def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
+        if not root: return None
+
+        if root.val > key:
+            root.left = self.deleteNode(root.left,key)
+        elif root.val < key:
+            root.right = self.deleteNode(root.right,key)
+        else:
+            if not root.right:
+                return root.left
+            if not root.left:
+                return root.right
+            node = root.right
+            while node.left:
+                node = node.left
+            root.val = node.val
+            root.right = self.deleteNode(root.right, node.val)
+        return root
