@@ -1,6 +1,15 @@
 # 739. Daily Temperatures
 
-
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        answer = [0 for temp in temperatures]
+        stack = []
+        for index, temp in enumerate(temperatures):
+            while stack and stack[-1][1] < temp:
+                j, _ = stack.pop()
+                answer[j] = index - j
+            stack.append((index,temp))
+        return answer
 ##################################################################
 # 901. Online Stock Span
 class StockSpanner:
