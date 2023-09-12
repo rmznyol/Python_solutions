@@ -77,4 +77,31 @@ class Solution:
         return count
     
 ############################################################
-    
+# 399. Evaluate Division
+
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        numerator_dict = collections.defaultdict(dict)
+        for index, equation in enumerate(equations):
+            numerator_dict[equation[0]][tuple(equation)] = values[index] 
+            numerator_dict[equation[1]][(equation[1],equation[0])] = 1 / values[index]
+        def query_calculator(*query):
+            a,b = query
+            if a not in numerator_dict and b not in numerator_dict:
+                return -1
+            if a in numerator_dict and numerator_dict[a].get((a,b)):
+                return numerator_dict[a][(a,b)]
+            stack = [(a,1)]
+            visited = {variable:False for variable in numerator_dict.keys()}
+            visited[a] = True
+            while stack:
+                curr, product = stack.pop()
+                for pair,value in numerator_dict[curr].items():
+                    if pair[1] == b:
+                        return product * value
+                    if not visited[pair[1]]:
+                        visited[pair[1]] = True
+                        stack.append((pair[1],value*product))
+            return -1
+
+        return [query_calculator(*query) for query in queries]
