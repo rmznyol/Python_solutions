@@ -27,7 +27,23 @@ class SmallestInfiniteSet:
     def addBack(self, num: int) -> None:
         self.removed.discard(num)
 ############################################################
+# 2542. Maximum Subsequence Score
 
+from heapq import heappush, heappop
+class Solution:
+    def maxScore(self, nums1: List[int], nums2: List[int], k: int) -> int:
+        mx = float('-inf')
+        heap = []
+        sum_until = 0
+        # print(list(sorted(zip(nums1,nums2),key=lambda x: x[1],reverse=True)))
+        for num1,num2 in sorted(zip(nums1,nums2),key=lambda x: x[1],reverse=True):
+            sum_until += num1
+            if len(heap) == k:
+                temp = heappop(heap)
+                sum_until -= temp
+            heappush(heap,num1)
+            mx = max(mx,sum_until * num2) if len(heap) == k else mx
+        return mx 
 ############################################################
 #2462. Total Cost to Hire K Workers
 
