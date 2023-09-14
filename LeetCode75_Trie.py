@@ -1,3 +1,5 @@
+# 208. Implement Trie (Prefix Tree)
+
 class TrieNode:
     def __init__(self, val) -> None:
         # example children value: Node for quick checkups
@@ -38,3 +40,20 @@ class Trie:
             else:
                 return False
         return False
+########################################################################
+# 1268. Search Suggestions System
+
+class Solution:
+    def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
+        #important point is that list is getting shorter, no need to search through the products all over again every time? That is not true 
+        l=len(searchWord)
+        results=[]
+        products.sort()
+        for i in range(l):
+            temp=[]
+            for word in products:
+                if searchWord[0:i+1]==word[0:i+1]:
+                    temp.append(word)
+            products=temp
+            results.append(products[:min(3,len(products))])
+        return results
