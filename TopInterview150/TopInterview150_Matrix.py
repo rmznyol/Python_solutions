@@ -55,3 +55,23 @@ class Solution:
             k += 1
         return output 
 ################################################################
+# 48. Rotate Image
+
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        #(x, y)->(y, -x)
+        #(i, -j) + ((n-1)/2,)
+        n = len(matrix)
+        for row in range(n//2):
+            temp = matrix[n-1-row]
+            matrix[n - row - 1] = matrix[row]
+            matrix[row] = temp
+        for row in range(n):
+            for column in range(row):
+                temp = matrix[column][row]
+                matrix[column][row] = matrix[row][column]
+                matrix[row][column] = temp
+        return matrix
