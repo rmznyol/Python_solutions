@@ -31,3 +31,27 @@ class Solution:
 
         return True
 ################################################################
+#54. Spiral Matrix
+
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        m = len(matrix)
+        n = len(matrix[0])
+        k = 0
+        output = []
+        while len(output) < m*n:
+        # 0 + k - > j - 1 - k on fixed kth row k <= n // 2 
+            for i in range(k, n-k):
+                output.append(matrix[k][i]) 
+        # 0 + k - > j - 1 - k on fixed n-1-k column
+            for j in range(k+1, m-k):
+                output.append(matrix[j][n-1-k])
+            if k < m - 1 - k:
+                for i in range(n-1-k -1, k-1, -1):
+                    output.append(matrix[m-1-k][i])
+            if k < n - 1 - k:
+                for j in range(m-1-k -1, k, -1):
+                    output.append(matrix[j][k])
+            k += 1
+        return output 
+################################################################
