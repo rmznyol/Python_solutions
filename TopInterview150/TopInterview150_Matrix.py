@@ -75,3 +75,56 @@ class Solution:
                 matrix[column][row] = matrix[row][column]
                 matrix[row][column] = temp
         return matrix
+################################################################
+# 73. Set Matrix Zeroes
+
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        rows = []
+        columns = []
+        m, n = len(matrix), len(matrix[0])
+        for row in range(m):
+            for column in range(n):
+                if matrix[row][column] == 0:
+                    rows.append(row)
+                    columns.append(column)
+        for row in rows:
+            matrix[row] = [0] * n
+        for column in columns:
+            for i in range(m):
+                matrix[i][column] = 0
+################################################################
+# 289. Game of Life     
+
+class Solution:
+    def gameOfLife(self, board: List[List[int]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        m, n = len(board), len(board[0])
+        def is_neighbor(i,j):
+            return 0 <= i < m and 0 <= j < n
+        def revive_or_die(i,j,neighbor_count):
+            if board[i][j] == 0 and neighbor_count == 3:
+                return True
+            if board[i][j] == 1 and not (1 < neighbor_count < 4):
+                return True  
+        dirs = [(0,1),(0,-1),(1,1),(1,-1),(-1,0),(-1,1),(-1,-1),(1,0)]
+        memory = [] 
+        for i in range(m):
+            for j in range(n):
+                neighbor_count = 0
+                for di, dj in dirs:
+                    if is_neighbor(i+di,j+dj):
+                        neighbor_count += board[i+di][j+dj]
+                if revive_or_die(i,j,neighbor_count):
+                    memory.append([i,j])
+        for point in memory:
+            if board[point[0]][point[1]]:
+                board[point[0]][point[1]] = 0
+            else:
+                board[point[0]][point[1]] = 1
+        return board
