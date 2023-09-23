@@ -29,4 +29,21 @@ class Solution:
         return intervals 
 
 #################################################
-       
+# 57. Insert Interval
+
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        insert_index = 0
+        if intervals:
+            while insert_index < len(intervals) and intervals[insert_index][0] <= newInterval[0]:
+                insert_index += 1
+        intervals.insert(insert_index,newInterval)
+        start_index = insert_index - 1 if insert_index > 0 else insert_index
+        curr = start_index
+        while curr < len(intervals) - 1:
+            if intervals[curr][1] >= intervals[curr+1][0]:
+                intervals[curr:curr+2] = [[intervals[curr][0], max(intervals[curr][1], intervals[curr+1][1])]]
+            else:
+                curr += 1
+        return intervals
+#################################################
