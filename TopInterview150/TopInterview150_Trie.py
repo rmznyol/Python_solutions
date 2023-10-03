@@ -81,3 +81,59 @@ class WordDictionary:
         else:
             return False
 #################################################
+# 212. Word Search II
+
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+        
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        curr = self.root
+        for c in word:
+            if c not in curr.children:
+                curr.children[c] = TrieNode()
+            curr = curr.children[c]
+        curr.is_end = True
+        
+
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        word_trie = Trie()
+        for word in words:
+            word_trie.insert(word)
+
+        m, n = len(board), len(board[0])
+        directions = [(0,1),(0,-1),(1,0),(-1,0)]
+        output = set()
+
+        def is_safe(row,col):
+            return 0 <= row < m and 0 <= col < n
+
+        visited = set()
+
+        def dfs(row,col,node, path):
+            if node.is_end:
+                output.add(path)
+            
+            for drow, dcol in directions:
+                next_row, next_col = row + drow, col + dcol
+                if is_safe(next_row,next_col) and (next_row,next_col) not in visited and board[next_row][next_col] in node.children:
+                    visited.add((next_row,next_col))
+                    dfs(next_row,next_col,
+                        node.children[board[next_row][next_col]],
+                        path + board[next_row][next_col])
+                    # if not removed then the visited spot will appear in the next iteration of the foor loop
+                    visited.remove((next_row,next_col))
+        # print(word_trie.root.children)
+        for row in range(m):
+            for col in range(n):
+                if board[row][col] in word_trie.root.children:
+                    visited.add((row,col))
+                    dfs(row,col,word_trie.root.children[board[row][col]],board[row][col])
+                    visited.remove((row,col))
+        return list(output)
