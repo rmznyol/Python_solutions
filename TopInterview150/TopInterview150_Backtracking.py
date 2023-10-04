@@ -21,23 +21,16 @@ class Solution:
 
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        sol=[]
-        def backtrack(remain,comb,nex):
-			# solution found
-            if remain==0:
-                sol.append(comb.copy())
+        res = []
+        def backtrack(combo, start):
+            if len(combo) == k:
+                res.append(combo[:])
             else:
-				# iterate through all possible candidates
-                for i in range(nex,n+1):
-					# add candidate
-                    comb.append(i)
-					#backtrack
-                    backtrack(remain-1,comb,i+1)
-					# remove candidate
-                    comb.pop()
-            
-        backtrack(k,[],1)
-        return sol
+                for i in range(start,n+1):
+                    backtrack(combo + [i],i+1)
+        backtrack([],1)
+
+        return res
 
 ####################################################
 # 46. Permutations
