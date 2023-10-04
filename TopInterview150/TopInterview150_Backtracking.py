@@ -76,3 +76,30 @@ class Solution:
                         path.pop()
         backtrack([],0,0)
         return outcome
+####################################################
+# 52. N-Queens II
+
+class Solution:
+    def totalNQueens(self, n: int) -> int:
+        res = 0
+        def next_block(i,j):
+            return [i-1 if i else None, j+1 if (j and j < n-1) else None]
+        
+        def backtrack(combo,no_access):
+            nonlocal res
+            if len(combo) == n:
+                res += 1 
+            else:
+                cannot_go = set(no[i] for no in no_access for i in range(2) if no[i] != None)
+                cannot_go.update(combo)
+                no_access = [next_block(*block) for block in no_access]
+                for i in range(n):
+                    if i not in cannot_go:
+                        combo.append(i)
+                        backtrack(combo, no_access + [[i-1 if i-1 >= 0 else None, i+1 if i+1 <= n-1 else None]])
+                        combo.pop()
+        
+        backtrack([],[])
+        
+        return res
+####################################################
