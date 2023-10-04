@@ -38,3 +38,41 @@ class Solution:
             
         backtrack(k,[],1)
         return sol
+
+####################################################
+# 46. Permutations
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        contained = {}
+        def backtrack(perm, contained):
+            if len(perm) == len(nums):
+                res.append(perm)
+            else:
+                for num in nums:
+                    if num not in contained:
+                        contained.add(num)
+                        backtrack(perm + [num],contained)
+                        contained.remove(num)
+                        
+        backtrack([],set())
+        return res
+####################################################
+# 39. Combination Sum
+
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        n = len(candidates)
+        outcome = []
+        def backtrack(path, sum_until, starting_index):
+            if sum_until == target:
+                outcome.append(path.copy())
+            else:
+                for i in range(starting_index,n):
+                    if sum_until + candidates[i] <= target:
+                        path.append(candidates[i])
+                        backtrack(path,sum_until + candidates[i],i)
+                        path.pop()
+        backtrack([],0,0)
+        return outcome
