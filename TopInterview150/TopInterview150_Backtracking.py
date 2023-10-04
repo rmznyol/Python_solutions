@@ -103,3 +103,45 @@ class Solution:
         
         return res
 ####################################################
+# 22. Generate Parentheses
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        output = set()
+        def backtrack(path):
+            if len(path) == 2*n:
+                output.add(path)
+            else:
+                backtrack('(' + path + ')')
+                for i in range(len(path)):
+                    backtrack(path[:i]+'()'+ path[i:])
+        backtrack('')
+        return output
+####################################################
+# 79. Word Search
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        m, n, l = len(board), len(board[0]), len(word)
+        dirs = [(0,1), (0,-1), (1,0), (-1,0)]
+        
+
+        def is_safe(row,col,index,path):
+            return 0 <= row < m and 0 <= col < n and word[index] == board[row][col] and (row,col) not in path
+
+        def backtrack(row,col,path,word_index):
+            if word_index == l-1:
+                return True
+            for drow, dcol in dirs:
+                n_row, n_col = row + drow, col + dcol
+                if is_safe(n_row,n_col, word_index + 1,path):
+                    path.add((n_row, n_col))
+                    if backtrack(n_row, n_col, path,word_index+1):
+                        return True
+                    path.remove((n_row, n_col))
+        for row in range(m):
+            for col in range(n):
+                if board[row][col] == word[0] and backtrack(row,col,set([(row,col)]),0):
+                    return True
+        return False
+        
