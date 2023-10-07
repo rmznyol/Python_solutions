@@ -71,7 +71,14 @@ class Solution:
                 slow +=1
                 count -= 1 
         return slow  
-    
+######################################################################
+# 169. Majority Element
+
+from collections import Counter
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        c = Counter(nums)
+        return max(c.keys(), key=c.get)
 ######################################################################
 # 55. Jump Game
 class Solution:
