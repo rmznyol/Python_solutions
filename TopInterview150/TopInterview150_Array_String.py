@@ -122,6 +122,7 @@ class Solution:
         return True
 ######################################################################
 # 45. Jump Game II
+
 class Solution:
     def jump(self, nums: List[int]) -> int:
         l = len(nums)
@@ -137,3 +138,18 @@ class Solution:
         return dp[0]
 
 ######################################################################
+# 274. H-Index
+
+from collections import defaultdict
+class Solution:
+    def hIndex(self, citations: List[int]) -> int:
+        count = defaultdict(int)
+        for citation in citations:
+            for i in range(citation+1):
+                count[i] += 1
+        mx = 0
+        print(count)
+        for ncited, ngreatercited  in count.items():
+            print(mx,ncited, ngreatercited , ncited >= ngreatercited and ncited )
+            mx = ncited if ncited >= ngreatercited and ncited > mx else mx
+        return mx  
