@@ -80,6 +80,27 @@ class Solution:
         c = Counter(nums)
         return max(c.keys(), key=c.get)
 ######################################################################
+# 189. Rotate Array
+
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        k = k % len(nums)
+        nums[:] = nums[-k:] + nums[:-k]
+        return nums
+######################################################################
+# 121. Best Time to Buy and Sell Stock
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        not_bought = prices[0]
+        profit = 0 
+        for price in prices[1:]:
+            not_bought,profit = min(price,not_bought), max(profit, price - not_bought)
+        return profit
+
+######################################################################
 # 55. Jump Game
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
