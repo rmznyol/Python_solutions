@@ -99,6 +99,14 @@ class Solution:
         for price in prices[1:]:
             not_bought,profit = min(price,not_bought), max(profit, price - not_bought)
         return profit
+######################################################################
+#122. Best Time to Buy and Sell Stock II
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        profit = 0
+        for yesterday, today in zip(prices[:-1],prices[1:]):
+            profit += max([0,today - yesterday])
+        return profit 
 
 ######################################################################
 # 55. Jump Game
@@ -112,4 +120,20 @@ class Solution:
                     if j > i:
                         return False
         return True
+######################################################################
+# 45. Jump Game II
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        l = len(nums)
+        dp = [0] * l
+        for i in range(l-2,-1,-1):
+            # print(dp)
+            j_range = nums[i]
+            # print(i,nums[i],j_range)
+            if j_range:
+                dp[i] = 1 + min(dp[i + j] for j in range(1,min(j_range +1, l - i)))
+            else:
+                dp[i] = float('inf')
+        return dp[0]
+
 ######################################################################
