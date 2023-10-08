@@ -12,8 +12,25 @@ class Solution:
                     slow += 1
                 longest = min(fast - slow + 1,longest) if longest >0 else fast-slow + 1
         return longest 
-                
+############################################################
+# 3. Longest Substring Without Repeating Characters
 
+from collections import defaultdict
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        slow = 0
+        cache = defaultdict(int)
+        longest = 0
+        for fast, char in enumerate(s):
+            if cache[char]:
+                longest = max(fast - slow,longest)
+                while cache[char]:
+                    cache[s[slow]] -= 1
+                    slow += 1
+            cache[char] += 1
+        longest = max(len(s) - slow,longest)
+        return longest
+############################################################
 # 76. Minimum Window Substring
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
