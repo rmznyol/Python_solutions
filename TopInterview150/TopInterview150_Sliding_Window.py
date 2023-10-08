@@ -31,6 +31,29 @@ class Solution:
         longest = max(len(s) - slow,longest)
         return longest
 ############################################################
+# 30. Substring with Concatenation of All Words
+
+class Solution:
+    def findSubstring(self, s: str, words: List[str]) -> List[int]:
+        w = len(words)
+        l = len(words[0])
+        res = []
+        words = {word:True for word in words}
+        for i in range(len(s)-w*l+1):
+            if s[i:i+l] in words:
+\
+                count = 0
+                j = 0
+                while words.get(s[i+j:i+l+j]) and count < w:
+                    words[s[i+j:i+l+j]] = False
+                    count += 1
+                    j += l
+                    print(s[i+j:i+l+j])
+                if count == w:
+                    res.append(i)
+                words = {word:True for word in words}
+        return res
+############################################################
 # 76. Minimum Window Substring
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
