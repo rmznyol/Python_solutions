@@ -1,3 +1,19 @@
+# 209. Minimum Size Subarray Sum
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        slow = 0
+        sum_until = 0
+        longest = 0 
+        for fast,num in enumerate(nums):
+            sum_until += num
+            if sum_until >= target:
+                while slow < fast and sum_until - nums[slow] >= target:
+                    sum_until -= nums[slow]
+                    slow += 1
+                longest = min(fast - slow + 1,longest) if longest >0 else fast-slow + 1
+        return longest 
+                
+
 # 76. Minimum Window Substring
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
