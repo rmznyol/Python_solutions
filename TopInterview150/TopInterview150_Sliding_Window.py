@@ -41,7 +41,6 @@ class Solution:
         words = {word:True for word in words}
         for i in range(len(s)-w*l+1):
             if s[i:i+l] in words:
-\
                 count = 0
                 j = 0
                 while words.get(s[i+j:i+l+j]) and count < w:
