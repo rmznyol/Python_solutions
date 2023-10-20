@@ -55,3 +55,26 @@ class Solution:
                                     queue.append((next_gene, n_of_changes + 1, i))
         
         return -1
+###############################################################
+# 127. Word Ladder
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        bank = set(wordList)
+        visited = set(beginWord)
+        choices = string.ascii_lowercase
+        queue = collections.deque([(beginWord,1,None)]) # word,number_of_changes, the last changed index
+        while queue:
+            word, n_of_changes, last_change_index = queue.popleft()
+            if word == endWord:
+                return n_of_changes
+            else:
+                for i in range(len(word)):
+                    if i != last_change_index:
+                        for choice in choices:
+                            if choice != word[i]:
+                                next_word = word[:i] + choice + word[i+1:]
+                                if next_word in bank and next_word not in visited:
+                                    visited.add(next_word)
+                                    queue.append((next_word, n_of_changes + 1, i))
+        
+        return 0
