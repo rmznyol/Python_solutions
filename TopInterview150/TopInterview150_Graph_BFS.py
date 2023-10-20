@@ -32,3 +32,26 @@ class Solution:
 
 
 ###############################################################
+# 433. Minimum Genetic Mutation
+
+class Solution:
+    def minMutation(self, startGene: str, endGene: str, bank: List[str]) -> int:
+        bank = set(bank)
+        visited = set(startGene)
+        choices = ['A','C','G','T']
+        queue = collections.deque([(startGene,0,-1)]) # gene,number_of_changes, the last changed index
+        while queue:
+            gene, n_of_changes, last_change_index = queue.popleft()
+            if gene == endGene:
+                return n_of_changes
+            else:
+                for i in range(8):
+                    if i != last_change_index:
+                        for choice in choices:
+                            if choice != gene[i]:
+                                next_gene = gene[:i] + choice + gene[i+1:]
+                                if next_gene in bank and next_gene not in visited:
+                                    visited.add(next_gene)
+                                    queue.append((next_gene, n_of_changes + 1, i))
+        
+        return -1
