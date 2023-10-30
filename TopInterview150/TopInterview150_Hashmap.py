@@ -33,3 +33,11 @@ class Solution:
                     return False
             else:
                 return True
+##########################################     
+
+#290. Word Pattern
+class Solution:
+    def wordPattern(self, pattern: str, s: str) -> bool:
+        ls = s.split()
+        return len(Counter(pattern)) == len(Counter(ls)) == len(Counter(zip(pattern, ls))) and len(pattern) == len(ls)
+                
