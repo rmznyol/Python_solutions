@@ -41,3 +41,10 @@ class Solution:
         ls = s.split()
         return len(Counter(pattern)) == len(Counter(ls)) == len(Counter(zip(pattern, ls))) and len(pattern) == len(ls)
                 
+##########################################     
+
+# 242. Valid Anagram
+from collections import Counter
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        return Counter(s) == Counter(t)
