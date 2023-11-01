@@ -48,3 +48,18 @@ from collections import Counter
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         return Counter(s) == Counter(t)
+
+##########################################     
+
+# 49. Group Anagrams
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        collection  = {}
+        for string in strs:
+            sorted_string = ''.join(sorted(string))
+            if collection.get(sorted_string):
+                collection[sorted_string].append(string)
+            else:
+                collection[sorted_string] = [string]
+        return list(collection.values())
