@@ -63,3 +63,14 @@ class Solution:
             else:
                 collection[sorted_string] = [string]
         return list(collection.values())
+##########################################
+# 1. Two Sum
+   
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        cache = {}
+        for i, num in enumerate(nums):
+            cache[target - num] = i
+        for j, num in enumerate(nums):
+            if (num in cache) and cache[num] != j:
+                return [cache[num],j]
