@@ -74,3 +74,17 @@ class Solution:
         for j, num in enumerate(nums):
             if (num in cache) and cache[num] != j:
                 return [cache[num],j]
+
+##########################################           
+# 202. Happy Number
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        cache = {}
+        happy = n
+        while happy != 1 and cache.get(happy) == None:
+            cache[happy] = True
+            happy_temp = 0 
+            for char in str(happy):
+                happy_temp += int(char) ** 2
+            happy = happy_temp
+        return True if happy == 1 else False 
