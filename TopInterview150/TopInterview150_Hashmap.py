@@ -87,4 +87,16 @@ class Solution:
             for char in str(happy):
                 happy_temp += int(char) ** 2
             happy = happy_temp
-        return True if happy == 1 else False 
+        return True if happy == 1 else False
+    
+##########################################  
+# 219. Contains Duplicate II
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        record = {} 
+        for i, num in enumerate(nums):
+            if record.get(num) != None and ((i - record.get(num)) <= k):
+                return True
+            else:
+                record[num] = i
+        return False
