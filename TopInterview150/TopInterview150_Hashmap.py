@@ -88,8 +88,8 @@ class Solution:
                 happy_temp += int(char) ** 2
             happy = happy_temp
         return True if happy == 1 else False
-    
 ##########################################  
+
 # 219. Contains Duplicate II
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
@@ -100,3 +100,18 @@ class Solution:
             else:
                 record[num] = i
         return False
+########################################## 
+
+# 128. Longest Consecutive Sequence
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        mx = 0
+        nums_set = set(nums)
+        for n in nums_set:
+            if (n-1) not in nums_set:
+                length = 1
+                while (n+length) in nums_set:
+                    length += 1
+                mx = max(mx, length)
+        
+        return mx
