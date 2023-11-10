@@ -60,3 +60,43 @@ class Solution:
         return head.next 
     
 ############################################################
+# 138. Copy List with Random Pointer
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if head is None:
+            return None
+        pointer_dict=dict()
+        temp=head
+        head2=Node(head.val)
+        if temp.random==temp:
+            head2.random=head2
+        elif temp.random is not None:
+            nn=Node(temp.random.val)
+            head2.random=nn
+            pointer_dict[head.random]=nn
+        connected_dict=dict()
+        connected_dict[head]=head2
+        temp=temp.next
+        temp2=head2
+        while temp is not None:
+            if temp in pointer_dict:
+                nn=pointer_dict[temp]
+            else:
+                nn=Node(temp.val)
+            connected_dict[temp]=nn
+            temp2.next=nn
+            if temp.random is not None:
+                if temp.random in connected_dict:
+                    nn.random=connected_dict[temp.random]
+                elif temp.random in pointer_dict:
+                    nn.random=pointer_dict[temp.random]
+                else:
+                    nnn=Node(temp.random.val)
+                    nn.random=nnn
+                    pointer_dict[temp.random]=nnn   
+            temp2=nn
+            temp=temp.next
+        return head2
+
+############################################################
