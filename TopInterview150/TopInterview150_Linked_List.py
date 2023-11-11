@@ -100,3 +100,18 @@ class Solution:
         return head2
 
 ############################################################
+# 92. Reverse Linked List II
+class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        index = 0
+        curr = head
+        while current:
+            if index == left:
+                middle_head = curr
+            if index == right:
+                middle_tail == curr
+            
+            index += 1 
+            curr = head.next
+
+############################################################
