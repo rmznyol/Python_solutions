@@ -115,3 +115,39 @@ class Solution:
             curr = head.next
 
 ############################################################
+# 25. Reverse Nodes in k-Group
+
+class Solution:
+    def reverse_a_group(self,head):
+        before = None
+        after = head
+        while after:
+            temp = after.next
+            after.next = before
+            before = after
+            after = temp
+        # should redurn head and tail
+        return before, head # before is new head and head is new tail
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        curr = head
+        curr_prev = None
+        while curr:
+            count = 1
+            inner_curr = curr
+            # first we find a chunk of k nodes
+            while count < k and inner_curr:
+                count += 1
+                inner_curr = inner_curr.next
+            temp = inner_curr.next if inner_curr else None
+            if inner_curr and count == k:
+                inner_curr.next = None
+                inner_head, inner_tail = self.reverse_a_group(curr)
+                if curr_prev:
+                    curr_prev.next = inner_head
+                else:
+                    head = inner_head
+                inner_tail.next = temp
+                curr_prev = inner_tail
+            curr = temp
+        return head
+############################################################
