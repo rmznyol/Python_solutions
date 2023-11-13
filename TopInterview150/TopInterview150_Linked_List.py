@@ -151,3 +151,28 @@ class Solution:
             curr = temp
         return head
 ############################################################
+# 19. Remove Nth Node From End of List
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        if not head or not head.next:
+            return None
+        i = 0
+        forward = head
+        back = None
+        while forward:
+            print(forward.val,i)
+            if i < n:
+                i += 1
+            else:
+                back = back.next if back else head
+                print(forward.val, back.val)
+            forward = forward.next
+        if n == i:
+            if back:
+                back.next = back.next.next
+            else:
+                head = head.next
+            
+        return head 
+
+############################################################
