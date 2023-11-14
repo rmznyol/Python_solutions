@@ -176,3 +176,29 @@ class Solution:
         return head 
 
 ############################################################
+# 82. Remove Duplicates from Sorted List II
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head == None:
+            return head
+        counter = collections.defaultdict(int)
+        curr = head
+        while curr:
+            counter[curr.val] += 1
+            curr = curr.next
+        new_head = new_curr = None
+        curr = head
+        while curr:
+            if counter[curr.val] == 1:
+                if not new_head: 
+                    new_head = curr
+                    new_curr = curr
+                else:
+                    new_curr.next = curr
+                    new_curr = curr
+            curr = curr.next 
+        if new_curr:
+            new_curr.next = None
+        return new_head
+
+############################################################
