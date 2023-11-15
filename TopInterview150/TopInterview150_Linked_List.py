@@ -202,3 +202,29 @@ class Solution:
         return new_head
 
 ############################################################
+# 61. Rotate List
+
+class Solution:
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if head:
+            i = 1
+            new_head_prev = None
+            curr = head 
+            pointer_store = {}
+            while curr:
+                pointer_store[i] = curr
+                curr = curr.next
+                i += 1
+            k = k % (i-1)
+            if k > 0:
+                new_head_prev = pointer_store[i-1-k]
+                new_head = new_head_prev.next
+                new_head_prev.next = None
+                curr2 = new_head
+                while curr2.next:
+                    curr2 = curr2.next
+                curr2.next = head
+                return new_head
+            return head
+        
+############################################################
