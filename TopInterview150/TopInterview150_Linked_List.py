@@ -228,3 +228,32 @@ class Solution:
             return head
         
 ############################################################
+# 86. Partition List
+
+class Solution:
+    def partition(self, head: Optional[ListNode], x: int) -> Optional[ListNode]:
+        fast_prev = slow = None
+        fast = head
+        slow_head = greater_head = None
+        while fast:
+            temp = fast.next
+            if fast.val < x:
+                if slow:
+                    slow.next = fast
+                    if fast_prev:
+                        fast_prev.next = temp
+                    slow = fast
+                else:
+                    slow_head = fast
+                    slow = fast
+                    slow.next = None
+                if fast_prev:
+                    fast_prev.next = temp
+            else:
+                fast_prev = fast
+                if not greater_head:
+                    greater_head = fast
+            fast = temp
+        if slow:
+            slow.next = greater_head 
+        return slow_head if slow_head else head
