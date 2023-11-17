@@ -257,3 +257,29 @@ class Solution:
         if slow:
             slow.next = greater_head 
         return slow_head if slow_head else head
+
+############################################################
+# 146. LRU Cache
+from collections import OrderedDict
+class LRUCache(OrderedDict):
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+
+    def get(self, key: int) -> int:
+        if key in self:
+            self.move_to_end(key)
+            return self[key]
+        else:
+            return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self:
+            self.move_to_end(key)
+            self[key]=value
+        elif self.capacity>0:
+            self[key]=value
+            self.capacity-=1
+        else:
+            self.popitem(last=False)
+            self[key]=value
