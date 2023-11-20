@@ -35,3 +35,21 @@ class Solution:
 
         return True
 ########################################################
+# 226. Invert Binary Tree
+from collections import deque
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if root == None:
+            return root
+        my_queue = deque([root])
+        while len(my_queue) > 0:
+            temp = my_queue.popleft()
+            if temp.left:
+                my_queue.append(temp.left)
+            if temp.right:
+                my_queue.append(temp.right)
+            switch = temp.left
+            temp.left = temp.right
+            temp.right = switch
+        return root
+########################################################
