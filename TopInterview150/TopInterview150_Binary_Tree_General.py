@@ -53,3 +53,36 @@ class Solution:
             temp.right = switch
         return root
 ########################################################
+# 101. Symmetric Tree
+from collections import deque
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        if not root or (not root.left and not root.right):
+            return True
+        if not root.left and root.right:
+            return False
+        if root.left and not root.right:
+            return False
+        if root.left.val != root.right.val:
+            return False
+        leftq = deque([root.left])
+        rightq = deque([root.right])
+        while len(leftq) > 0:
+            temp_left = leftq.popleft()
+            temp_right = rightq.popleft()
+            if temp_left.left and temp_right.right:
+                if temp_left.left.val != temp_right.right.val:
+                    return False
+                leftq.append(temp_left.left)
+                rightq.append(temp_right.right)
+            elif (temp_left.left and not temp_right.right) or (not temp_left.left and temp_right.right):
+                return False
+            if temp_left.right and temp_right.left:
+                if temp_left.right.val != temp_right.left.val:
+                    return False
+                leftq.append(temp_left.right)
+                rightq.append(temp_right.left)
+            elif (temp_left.right and not temp_right.left) or (not temp_left.right and temp_right.left):
+                return False
+        return True
+########################################################
